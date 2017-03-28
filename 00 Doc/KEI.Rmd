@@ -1,0 +1,108 @@
+---
+title: "<center><b>Key Economic Indicators</b></center>"
+author: "<center><b>Chris Crider, Ding Zhang, Isaac Gonzalez</b></center>"
+output:
+  html_document:
+    toc: yes
+  html_notebook:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+<center>![usa](../03 Visualizations/Map_of_USA.png)</center>
+
+#**Introduction**
+The dataset we found allows us to distill and analyze key economic indicators from the United States during the years 2005 through 2016. A few of our findings are demonstrated below.
+
+#**R Configuration**
+Below we display our sessionInfo() and the packages we've required.
+
+```{r sessionInfo}
+sessionInfo(package=NULL)
+require("jsonlite")
+require("RCurl")
+require("ggplot2")
+require("dplyr")
+```
+
+#**The Data**
+*Disclaimer: The visualizations in this section were created using Tableau 10. The R code that is featured will recreate the visuals that were rendered in Tableau.*
+
+
+
+```{r}
+df <- data.frame(fromJSON(getURL(URLencode(gsub("\n", " ",'oraclerest.cs.utexas.edu:5018/rest/native/?query="select * from KEI_Avg"')),httpheader=c(DB='jdbc:data:world:sql:chriscrider:s-17-edv-project-3', USER='gonzalez', PASS='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmdvbnphbGV6IiwiaXNzIjoiYWdlbnQ6Z29uemFsZXo6OmMwN2RkYmNkLTU3ZmEtNDBkNi04MzQwLTQ0NzJlYzI0OTBiMiIsImlhdCI6MTQ4NDY5NzMxOSwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.5mTuKVcV8fKTtPvvxxcyo-5TBGLGufXDQkIraPgCsuB4hc7mUj_editztVly63Yr4jxmvyvI-kUu07EvQnuZYw', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE) ))
+```
+
+```{r eval=FALSE}
+p1 <- ggplot(data=df)+geom_point(aes(x=Year_Avg, y=Unemployment_U_S__Avg
+))+ geom_line(aes(x=Year_Avg, y=Unemployment_U_S__Avg, group=1))+geom_text(aes(x=Year_Avg, y=Unemployment_U_S__Avg, label=sprintf("%0.2f", round(Unemployment_U_S__Avg, digits = 2))), nudge_x = 0.50, check_overlap = TRUE)+labs(title = "Unemployment Rate in U.S. (2007-2016)", x="Year", y="Unemployment Rate")+ theme_gray()+scale_x_continuous(breaks = c(2007:2016)) 
+p2 <- ggplot(data=df)+geom_point(aes(x=Year_Avg, y=CCI_U_S__Avg
+))+ geom_line(aes(x=Year_Avg, y=CCI_U_S__Avg, group=1))+geom_text(aes(x=Year_Avg, y=CCI_U_S__Avg, label=sprintf("%0.2f", round(CCI_U_S__Avg, digits = 2))),nudge_y = -1, nudge_x = 0.50, check_overlap = TRUE)+labs(title = "Consumer Confidence Index in U.S. (2007-2016)", x="Year", y="C.C.I.")+scale_x_continuous(breaks = c(2007:2016))
+
+
+library("grid")
+
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(2, 1)))  
+```
+
+<center>![URvsCCI](../03 Visualizations/UR_vs_CCI.png)</center>
+
+The visualization above describes the relationship between the unemployment rate and the consumer confidence index between the years 2007 through 2016. As you can see, the two have an inverse relationship.
+To recreate this chart in Tableau 10, upload "KEI_Avg.csv" to a Tableau workbook, use "CCI US Avg" and "Unemployment US Avg" as your measures and use "Year_Avg" as your dimension. 
+
+```{r}
+df2 <- data.frame(fromJSON(getURL(URLencode(gsub("\n", " ",'oraclerest.cs.utexas.edu:5018/rest/native/?query="select * from unemploymentTXandUSA_Ding"')),httpheader=c(DB='jdbc:data:world:sql:chriscrider:s-17-edv-project-3', USER='ding', PASS='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmRpbmciLCJpc3MiOiJhZ2VudDpkaW5nOjpkZmZjZWRkMi0zYzNmLTRhNzUtODlkZC1mMGJmY2UyZGJmZDEiLCJpYXQiOjE0ODQ2OTczODUsInJvbGUiOlsidXNlcl9hcGlfd3JpdGUiLCJ1c2VyX2FwaV9yZWFkIl0sImdlbmVyYWwtcHVycG9zZSI6dHJ1ZX0.z7mVK3h-7pjJV-keOW1uP_ydEr7F4Hs7pvzOdDcuMKO3l5B-o7W7Xj-iNaWfaDYzt_zduENZtcONAnoWpro3cg', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE) ))
+```
+
+```{r eval=FALSE}
+rdate <- as.Date(df2$date, "20%y-%d-%m")
+p = ggplot(df2) + geom_line(aes(y=Unemployment_US, x = ddate)) + geom_line(aes(y=Unemployment_TX, x = ddate, colour = "red")) + ylab("Unemployment Percentage") + xlab("Date") + ggtitle("Unemployment Percentage in U.S. and Texas (Red) Over Time") + theme(axis.text.x=element_text(angle=90,size=10,vjust=0.5))
+```
+
+<center>![Unemploymentfinal](../03 Visualizations/Unemploymentfinal.png)</center>
+
+The graph for Unemployment in US and Texas shows a strong correlation between nationwide employment rate and state employment rate. This details how changes in the US may have an effect on changes in the state. As seen from the graph, there was a sharp rise in unemployment rate from 2008 to 2009 which occurred due to the Recession of 2008. From 2010 to 2017 onward, it shows the U.S and Texas recovering from this period of unemployment.
+
+To rebuild the graph in Tableau, first select the unemploymentTXandUSA_Ding.csv file downloaded from data.world. Next, select the Measure Unemployment TX and drag it onto the rows and drag the Unemployment US onto the right side of the sheet. Then drag the Dimension Date onto the columns. In analysis, deselect aggregate measures and in the show me tab select dual combination. Afterward, double click on YEAR(Date) in the columns and change the year to months. Lastly, double click on the x axis and change the axis title from month of date to Year.
+
+
+
+
+```{r}
+df1 <- data.frame(fromJSON(getURL(URLencode(gsub("\n", " ",'oraclerest.cs.utexas.edu:5018/rest/native/?query="select * from ConfidenceHomeStats where `Year Avgs`<=2016"')),httpheader=c(DB='jdbc:data:world:sql:chriscrider:s-17-edv-project-3', USER='gonzalez', PASS='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmdvbnphbGV6IiwiaXNzIjoiYWdlbnQ6Z29uemFsZXo6OmMwN2RkYmNkLTU3ZmEtNDBkNi04MzQwLTQ0NzJlYzI0OTBiMiIsImlhdCI6MTQ4NDY5NzMxOSwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.5mTuKVcV8fKTtPvvxxcyo-5TBGLGufXDQkIraPgCsuB4hc7mUj_editztVly63Yr4jxmvyvI-kUu07EvQnuZYw', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE) ))
+```
+
+```{r eval=FALSE}
+
+cPlot1= ggplot(df1)  + geom_point(aes(x = Year_Avgs,y=Home_Price_Avg))+ geom_line(aes(x = Year_Avgs,y=Home_Price_Avg)) + xlab("Year") + ylab("Average Home Price") + ggtitle('Avg Home Price ~2008-2016')
+
+
+cPlot2 = ggplot(df1)  + geom_point(aes(x = Year_Avgs,y=CCI_AVG), colour = 'red')+ geom_line(aes(x = Year_Avgs,y=CCI_AVG), colour = 'red')+ xlab("Year") + ylab("Average Consumer Confidence")  + ggtitle('Avg Consumer Confidence Index ~2008-2016')
+
+
+library("grid")
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(2, 1))) 
+```
+
+<center>![Unemploymentfinal](../03 Visualizations/Sheet3.png)</center>
+
+This plot charts the relationship between gas prices and non-residential building construction from the beginning of the recession in 2008 until 2014. The plot shows that, afer a mutual initial dip, the two were inversely related during this time. 
+
+In 2013, however, something seems to have occurred that caused building construction to sharply increase while gasoline prices only gradually decreased. A graph like this can identify or further describe economically significant events and trends. In this example the plot raises the question: What occured in 2013 to spark this sharp incline? While further analysis of other data has surely answered this question, this is a good demonstration of usefully applied data analylsis.
+
+To recreate this visualization in Tableau:
+1: Download the file Key_Economic_Indicators.csv from https://data.world/chriscrider/s-17-edv-project-3
+
+2: Open the file in Tableau and create a new sheet and ensure 'Aggregate Measures' is unabled under the analysis drop-down menu
+
+3: Add Year to the Columns field. Using the dropdown arrow on the 'Year' field to filter the year between 2007 and 2014
+
+4: Add the 'Non-Residential Building Construction' and 'Retail Gasoline Prices TX' pills onto columns
+
+5: Under the 'Show Me' drop-down, select 'dual lines'
+
+6: If not already, drag the 'Measure Names' pill onto the 'Color' icon under 'Marks'
+
