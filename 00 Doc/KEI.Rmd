@@ -31,7 +31,7 @@ require("dplyr")
 
 
 ```{r}
-df <- data.frame(fromJSON(getURL(URLencode(gsub("\n", " ",'oraclerest.cs.utexas.edu:5018/rest/native/?query="select * from KEI_Avg"')),httpheader=c(DB='jdbc:data:world:sql:chriscrider:s-17-edv-project-3', USER='gonzalez', PASS='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmdvbnphbGV6IiwiaXNzIjoiYWdlbnQ6Z29uemFsZXo6OmMwN2RkYmNkLTU3ZmEtNDBkNi04MzQwLTQ0NzJlYzI0OTBiMiIsImlhdCI6MTQ4NDY5NzMxOSwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.5mTuKVcV8fKTtPvvxxcyo-5TBGLGufXDQkIraPgCsuB4hc7mUj_editztVly63Yr4jxmvyvI-kUu07EvQnuZYw', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE) ))
+df <- data.frame(fromJSON(getURL(URLencode(gsub("\n", " ",'oraclerest.cs.utexas.edu:1234/rest/native/?query="select * from KEI_Avg"')),httpheader=c(DB='jdbc:data:world:sql:chriscrider:s-17-edv-project-3', USER='gonzalez', PASS='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmdvbnphbGV6IiwiaXNzIjoiYWdlbnQ6Z29uemFsZXo6OmMwN2RkYmNkLTU3ZmEtNDBkNi04MzQwLTQ0NzJlYzI0OTBiMiIsImlhdCI6MTQ4NDY5NzMxOSwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.5mTuKVcV8fKTtPvvxxcyo-5TBGLGufXDQkIraPgCsuB4hc7mUj_editztVly63Yr4jxmvyvI-kUu07EvQnuZYw', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE) ))
 ```
 
 ```{r eval=FALSE}
@@ -53,7 +53,7 @@ The visualization above describes the relationship between the unemployment rate
 To recreate this chart in Tableau 10, upload "KEI_Avg.csv" to a Tableau workbook, use "CCI US Avg" and "Unemployment US Avg" as your measures and use "Year_Avg" as your dimension. 
 
 ```{r}
-df2 <- data.frame(fromJSON(getURL(URLencode(gsub("\n", " ",'oraclerest.cs.utexas.edu:5018/rest/native/?query="select * from unemploymentTXandUSA_Ding"')),httpheader=c(DB='jdbc:data:world:sql:chriscrider:s-17-edv-project-3', USER='ding', PASS='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmRpbmciLCJpc3MiOiJhZ2VudDpkaW5nOjpkZmZjZWRkMi0zYzNmLTRhNzUtODlkZC1mMGJmY2UyZGJmZDEiLCJpYXQiOjE0ODQ2OTczODUsInJvbGUiOlsidXNlcl9hcGlfd3JpdGUiLCJ1c2VyX2FwaV9yZWFkIl0sImdlbmVyYWwtcHVycG9zZSI6dHJ1ZX0.z7mVK3h-7pjJV-keOW1uP_ydEr7F4Hs7pvzOdDcuMKO3l5B-o7W7Xj-iNaWfaDYzt_zduENZtcONAnoWpro3cg', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE) ))
+df2 <- data.frame(fromJSON(getURL(URLencode(gsub("\n", " ",'oraclerest.cs.utexas.edu:1234/rest/native/?query="select * from unemploymentTXandUSA_Ding"')),httpheader=c(DB='jdbc:data:world:sql:chriscrider:s-17-edv-project-3', USER='ding', PASS='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmRpbmciLCJpc3MiOiJhZ2VudDpkaW5nOjpkZmZjZWRkMi0zYzNmLTRhNzUtODlkZC1mMGJmY2UyZGJmZDEiLCJpYXQiOjE0ODQ2OTczODUsInJvbGUiOlsidXNlcl9hcGlfd3JpdGUiLCJ1c2VyX2FwaV9yZWFkIl0sImdlbmVyYWwtcHVycG9zZSI6dHJ1ZX0.z7mVK3h-7pjJV-keOW1uP_ydEr7F4Hs7pvzOdDcuMKO3l5B-o7W7Xj-iNaWfaDYzt_zduENZtcONAnoWpro3cg', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE) ))
 ```
 
 ```{r eval=FALSE}
@@ -71,7 +71,7 @@ To rebuild the graph in Tableau, first select the unemploymentTXandUSA_Ding.csv 
 
 
 ```{r}
-df1 <- data.frame(fromJSON(getURL(URLencode(gsub("\n", " ",'oraclerest.cs.utexas.edu:5018/rest/native/?query="select * from ConfidenceHomeStats where `Year Avgs`<=2016"')),httpheader=c(DB='jdbc:data:world:sql:chriscrider:s-17-edv-project-3', USER='gonzalez', PASS='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmdvbnphbGV6IiwiaXNzIjoiYWdlbnQ6Z29uemFsZXo6OmMwN2RkYmNkLTU3ZmEtNDBkNi04MzQwLTQ0NzJlYzI0OTBiMiIsImlhdCI6MTQ4NDY5NzMxOSwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.5mTuKVcV8fKTtPvvxxcyo-5TBGLGufXDQkIraPgCsuB4hc7mUj_editztVly63Yr4jxmvyvI-kUu07EvQnuZYw', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE) ))
+df1 <- data.frame(fromJSON(getURL(URLencode(gsub("\n", " ",'oraclerest.cs.utexas.edu:1234/rest/native/?query="select * from ConfidenceHomeStats where `Year Avgs`<=2016"')),httpheader=c(DB='jdbc:data:world:sql:chriscrider:s-17-edv-project-3', USER='gonzalez', PASS='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmdvbnphbGV6IiwiaXNzIjoiYWdlbnQ6Z29uemFsZXo6OmMwN2RkYmNkLTU3ZmEtNDBkNi04MzQwLTQ0NzJlYzI0OTBiMiIsImlhdCI6MTQ4NDY5NzMxOSwicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.5mTuKVcV8fKTtPvvxxcyo-5TBGLGufXDQkIraPgCsuB4hc7mUj_editztVly63Yr4jxmvyvI-kUu07EvQnuZYw', MODE='native_mode', MODEL='model', returnDimensions = 'False', returnFor = 'JSON'), verbose = TRUE) ))
 ```
 
 ```{r eval=FALSE}
@@ -106,3 +106,17 @@ To recreate this visualization in Tableau:
 
 6: If not already, drag the 'Measure Names' pill onto the 'Color' icon under 'Marks'
 
+The following are examples of Tableau actions using the same data used above:
+
+*First Example*
+<center>![actionexample1](../03 Visualizations/p4-tableau-1.png)</center>
+
+*Second Example*
+<center>![actionexample2](../03 Visualizations/p4-tableau-2.png)</center>
+
+*Third Example*
+<center>![actionexample3](../03 Visualizations/U_E.png)</center>
+<center>![actionexample3](../03 Visualizations/C_C_I.png)</center>
+
+[Here](https://isaacgonzalez.shinyapps.io/kei_avg/) is also a link to a Shiny action we created using the same data. A screenshot of it in practice is attached below in case the Shiny servers are down: 
+<center>![shiny](../03 Visualizations/shiny_example.png)</center>
